@@ -1,5 +1,5 @@
 # Determinist version of node:22-alpine to avoid breaking changes in the future
-FROM node:22.16.0-alpine3.22
+FROM node:alpine3.24
 
 WORKDIR /app
 
