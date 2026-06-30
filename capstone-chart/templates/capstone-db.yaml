@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "capstone-chart.fullname" . }}-capstone-db
+  labels:
+  {{- include "capstone-chart.labels" . | nindent 4 }}
+  annotations:
+    field.cattle.io/targetWorkloadIds: '["capstone/capstone-db"]'
+    management.cattle.io/ui-managed: "true"
+spec:
+  type: {{ .Values.capstoneDb.type }}
+  selector:
+    workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    {{- include "capstone-chart.selectorLabels" . | nindent 4 }}
+  {{- if .Values.capstoneDb.ipFamilyPolicy }}
+  ipFamilyPolicy: {{ .Values.capstoneDb.ipFamilyPolicy }}
+  {{- end }}
+  {{- if .Values.capstoneDb.ipFamilies }}
+  ipFamilies:
+  {{- .Values.capstoneDb.ipFamilies | toYaml | nindent 2 }}
+  {{- end }}
+  ports:
+  {{- .Values.capstoneDb.ports | toYaml | nindent 2 }}

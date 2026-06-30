@@ -1,0 +1,3104 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-06-30T21:09:29Z"
+    generateName: capstone-db-5445b85649-
+    labels:
+      pod-template-hash: 5445b85649
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-5445b85649-w67kc
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: capstone-db-5445b85649
+      uid: 2ea9bdc9-e9b1-4b38-a9fa-fe67f1244811
+    resourceVersion: "5235357"
+    uid: 47053ae0-e9fd-49b4-8273-52b00b7d0740
+  spec:
+    containers:
+    - env:
+      - name: POSTGRES_DB
+        value: worldcup2026
+      - name: POSTGRES_USER
+        value: postgres
+      envFrom:
+      - secretRef:
+          name: capstone-postgres-pass
+          optional: false
+      image: postgres:16-alpine
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - pg_isready
+          - -U
+          - postgres
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: postgres
+      ports:
+      - containerPort: 5432
+        name: postgres
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - pg_isready
+          - -U
+          - postgres
+        failureThreshold: 3
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "3"
+          memory: 16Gi
+        requests:
+          cpu: "1"
+          memory: 8Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/postgresql/data
+        name: vol-63nvv
+      - mountPath: /docker-entrypoint-initdb.d
+        name: vol-xehqv
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6q2f7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k3s-04
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: vol-63nvv
+      persistentVolumeClaim:
+        claimName: postgres-pvc
+    - configMap:
+        defaultMode: 420
+        name: podtgres-init-script
+        optional: false
+      name: vol-xehqv
+    - name: kube-api-access-6q2f7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:29Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:49Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:49Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:29Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://e04661d1bd8d134e1e789596b10a6c16141b2e937d0e72a684351359abc627b6
+      image: docker.io/library/postgres:16-alpine
+      imageID: docker.io/library/postgres@sha256:e013e867e712fec275706a6c51c966f0bb0c93cfa8f51000f85a15f9865a28cb
+      lastState: {}
+      name: postgres
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-06-30T21:09:29Z"
+    hostIP: 192.168.1.154
+    phase: Running
+    podIP: 10.42.4.30
+    podIPs:
+    - ip: 10.42.4.30
+    qosClass: Burstable
+    startTime: "2026-06-30T21:09:29Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cattle.io/timestamp: "2026-06-30T10:28:52Z"
+      kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+    creationTimestamp: "2026-06-30T19:35:39Z"
+    generateName: capstone-deployment-774596f7f5-
+    labels:
+      pod-template-hash: 774596f7f5
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-774596f7f5-6pjf5
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: capstone-deployment-774596f7f5
+      uid: e0bb3dd9-5636-4a0b-8f5e-1881f3bcc95d
+    resourceVersion: "5235391"
+    uid: cfdbc5ef-a1d9-4001-b2f3-5bdce1ac3f80
+  spec:
+    containers:
+    - env:
+      - name: DB_NAME
+        value: worldcup2026
+      - name: DB_USER
+        value: postgres
+      - name: DB_HOST
+        value: 10.43.39.155
+      - name: DB_PORT
+        value: "5432"
+      envFrom:
+      - secretRef:
+          name: capstone-db-pass
+          optional: false
+      image: sillygoat/capstone-dplc-student:latest
+      imagePullPolicy: Always
+      lifecycle: {}
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: capstone-container
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health/db
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 4Gi
+        requests:
+          cpu: "1"
+          memory: 1Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-h5x6v
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k3s-01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    topologySpreadConstraints:
+    - labelSelector:
+        matchLabels:
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+      maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+    volumes:
+    - name: kube-api-access-h5x6v
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T19:35:39Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:50Z"
+      message: 'containers with unready status: [capstone-container]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:50Z"
+      message: 'containers with unready status: [capstone-container]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T19:35:39Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://d11ae270a852b6a10e4f032a2612c4d32146f7bb9898fc51bbf1b4f3631aa1ec
+      image: docker.io/sillygoat/capstone-dplc-student:latest
+      imageID: docker.io/sillygoat/capstone-dplc-student@sha256:40aa66155fc60a0fa4757969f373924f8a495065af2aae75c949e1b03a2827a6
+      lastState:
+        terminated:
+          containerID: containerd://6b0a12db17e031f10183cb737df3793f1cd8f1feec765cecd541a6554243613a
+          exitCode: 1
+          finishedAt: "2026-06-30T21:08:50Z"
+          reason: Error
+          startedAt: "2026-06-30T19:35:41Z"
+      name: capstone-container
+      ready: false
+      restartCount: 1
+      started: false
+      state:
+        terminated:
+          containerID: containerd://d11ae270a852b6a10e4f032a2612c4d32146f7bb9898fc51bbf1b4f3631aa1ec
+          exitCode: 1
+          finishedAt: "2026-06-30T21:09:49Z"
+          reason: Error
+          startedAt: "2026-06-30T21:08:52Z"
+    hostIP: 192.168.1.151
+    phase: Running
+    podIP: 10.42.1.93
+    podIPs:
+    - ip: 10.42.1.93
+    qosClass: Burstable
+    startTime: "2026-06-30T19:35:39Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cattle.io/timestamp: "2026-06-30T10:28:52Z"
+      kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+    creationTimestamp: "2026-06-30T19:23:48Z"
+    generateName: capstone-deployment-774596f7f5-
+    labels:
+      pod-template-hash: 774596f7f5
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-774596f7f5-gsqqt
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: capstone-deployment-774596f7f5
+      uid: e0bb3dd9-5636-4a0b-8f5e-1881f3bcc95d
+    resourceVersion: "5235379"
+    uid: e07943fb-f26b-4ea4-9d6e-92d2234c0655
+  spec:
+    containers:
+    - env:
+      - name: DB_NAME
+        value: worldcup2026
+      - name: DB_USER
+        value: postgres
+      - name: DB_HOST
+        value: 10.43.39.155
+      - name: DB_PORT
+        value: "5432"
+      envFrom:
+      - secretRef:
+          name: capstone-db-pass
+          optional: false
+      image: sillygoat/capstone-dplc-student:latest
+      imagePullPolicy: Always
+      lifecycle: {}
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: capstone-container
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health/db
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 4Gi
+        requests:
+          cpu: "1"
+          memory: 1Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rzrjb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k3s-03
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    topologySpreadConstraints:
+    - labelSelector:
+        matchLabels:
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+      maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+    volumes:
+    - name: kube-api-access-rzrjb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T19:23:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:50Z"
+      message: 'containers with unready status: [capstone-container]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:50Z"
+      message: 'containers with unready status: [capstone-container]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T19:23:48Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://b7881ce1ba7ef9a270a88b55e317278857142ee1ad5987f78c69d2c658ac73f8
+      image: docker.io/sillygoat/capstone-dplc-student:latest
+      imageID: docker.io/sillygoat/capstone-dplc-student@sha256:40aa66155fc60a0fa4757969f373924f8a495065af2aae75c949e1b03a2827a6
+      lastState:
+        terminated:
+          containerID: containerd://a1c3351e694b0ae33bf27de9aa47fea1e5d80f527d8d96c09f4fdb70c5a592e1
+          exitCode: 1
+          finishedAt: "2026-06-30T21:08:50Z"
+          reason: Error
+          startedAt: "2026-06-30T19:30:44Z"
+      name: capstone-container
+      ready: false
+      restartCount: 2
+      started: false
+      state:
+        terminated:
+          containerID: containerd://b7881ce1ba7ef9a270a88b55e317278857142ee1ad5987f78c69d2c658ac73f8
+          exitCode: 1
+          finishedAt: "2026-06-30T21:09:49Z"
+          reason: Error
+          startedAt: "2026-06-30T21:08:52Z"
+    hostIP: 192.168.1.153
+    phase: Running
+    podIP: 10.42.3.44
+    podIPs:
+    - ip: 10.42.3.44
+    qosClass: Burstable
+    startTime: "2026-06-30T19:23:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cattle.io/timestamp: "2026-06-30T10:28:52Z"
+      kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+    creationTimestamp: "2026-06-30T19:26:07Z"
+    generateName: capstone-deployment-774596f7f5-
+    labels:
+      pod-template-hash: 774596f7f5
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-774596f7f5-jw4dd
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: capstone-deployment-774596f7f5
+      uid: e0bb3dd9-5636-4a0b-8f5e-1881f3bcc95d
+    resourceVersion: "5235398"
+    uid: 3cdadeaf-436d-4b9a-a9d8-237b2adcd79b
+  spec:
+    containers:
+    - env:
+      - name: DB_NAME
+        value: worldcup2026
+      - name: DB_USER
+        value: postgres
+      - name: DB_HOST
+        value: 10.43.39.155
+      - name: DB_PORT
+        value: "5432"
+      envFrom:
+      - secretRef:
+          name: capstone-db-pass
+          optional: false
+      image: sillygoat/capstone-dplc-student:latest
+      imagePullPolicy: Always
+      lifecycle: {}
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: capstone-container
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health/db
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 4Gi
+        requests:
+          cpu: "1"
+          memory: 1Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2mvjp
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k3s-04
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    topologySpreadConstraints:
+    - labelSelector:
+        matchLabels:
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+      maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+    volumes:
+    - name: kube-api-access-2mvjp
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T19:26:07Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:50Z"
+      message: 'containers with unready status: [capstone-container]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T21:09:50Z"
+      message: 'containers with unready status: [capstone-container]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-06-30T19:26:07Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://a319ae6dd6dffbd6526d37d639e544890db7485ffee4dc4bbd50cb0f1aa0733c
+      image: docker.io/sillygoat/capstone-dplc-student:latest
+      imageID: docker.io/sillygoat/capstone-dplc-student@sha256:40aa66155fc60a0fa4757969f373924f8a495065af2aae75c949e1b03a2827a6
+      lastState:
+        terminated:
+          containerID: containerd://ee0c8bb3791b5f6212d3329a38b27e50a07e31817901f0529f31decf88f22273
+          exitCode: 1
+          finishedAt: "2026-06-30T21:08:50Z"
+          reason: Error
+          startedAt: "2026-06-30T19:30:43Z"
+      name: capstone-container
+      ready: false
+      restartCount: 2
+      started: false
+      state:
+        terminated:
+          containerID: containerd://a319ae6dd6dffbd6526d37d639e544890db7485ffee4dc4bbd50cb0f1aa0733c
+          exitCode: 1
+          finishedAt: "2026-06-30T21:09:49Z"
+          reason: Error
+          startedAt: "2026-06-30T21:08:52Z"
+    hostIP: 192.168.1.154
+    phase: Running
+    podIP: 10.42.4.28
+    podIPs:
+    - ip: 10.42.4.28
+    qosClass: Burstable
+    startTime: "2026-06-30T19:26:07Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      field.cattle.io/targetWorkloadIds: '["capstone/capstone-db"]'
+      management.cattle.io/ui-managed: "true"
+    creationTimestamp: "2026-06-24T12:52:41Z"
+    name: capstone-db
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "97035"
+    uid: b3ae3b1a-c685-4ec4-9126-cfd38e9e0382
+  spec:
+    clusterIP: 10.43.39.155
+    clusterIPs:
+    - 10.43.39.155
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2026-06-30T12:47:23Z"
+    labels:
+      app: capstone-metrics-target
+    name: capstone-deployment-loadbalancer
+    namespace: capstone
+    resourceVersion: "5090229"
+    uid: 4cb81000-3af5-4826-a8b5-263111ebcbf9
+  spec:
+    clusterIP: 10.43.8.190
+    clusterIPs:
+    - 10.43.8.190
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: capstone-lb
+      port: 80
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2026-06-24T12:52:41Z"
+    generation: 7
+    labels:
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db
+    namespace: capstone
+    resourceVersion: "5235371"
+    uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          envFrom:
+          - secretRef:
+              name: capstone-postgres-pass
+              optional: false
+          image: postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "3"
+              memory: 16Gi
+            requests:
+              cpu: "1"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-30T21:09:13Z"
+      lastUpdateTime: "2026-06-30T21:09:13Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-06-24T12:52:41Z"
+      lastUpdateTime: "2026-06-30T21:09:49Z"
+      message: ReplicaSet "capstone-db-5445b85649" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 7
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "30"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-24T12:20:59Z"
+    generation: 180
+    labels:
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment
+    namespace: capstone
+    resourceVersion: "5235404"
+    uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: capstone-container
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health/db
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    conditions:
+    - lastTransitionTime: "2026-06-24T12:20:59Z"
+      lastUpdateTime: "2026-06-30T19:23:58Z"
+      message: ReplicaSet "capstone-deployment-774596f7f5" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-06-30T21:09:50Z"
+      lastUpdateTime: "2026-06-30T21:09:50Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 180
+    replicas: 3
+    unavailableReplicas: 3
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2026-06-30T21:09:29Z"
+    generation: 1
+    labels:
+      pod-template-hash: 5445b85649
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-5445b85649
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "5235360"
+    uid: 2ea9bdc9-e9b1-4b38-a9fa-fe67f1244811
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        pod-template-hash: 5445b85649
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 5445b85649
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          envFrom:
+          - secretRef:
+              name: capstone-postgres-pass
+              optional: false
+          image: postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "3"
+              memory: 16Gi
+            requests:
+              cpu: "1"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2026-06-26T00:51:30Z"
+    generation: 2
+    labels:
+      pod-template-hash: 5db7585cc7
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-5db7585cc7
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "1403489"
+    uid: 9b2492ed-0e3c-4065-a549-9190f88380f9
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 5db7585cc7
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 5db7585cc7
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: VerySecurePasswordDonteLeBayo
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "4"
+              memory: 16Gi
+            requests:
+              cpu: "4"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-06-24T12:52:41Z"
+    generation: 2
+    labels:
+      pod-template-hash: 6f76784fd9
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-6f76784fd9
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "172007"
+    uid: 79ff8a43-6eb2-4e25-9431-ec2a918f0213
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 6f76784fd9
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 6f76784fd9
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        affinity: {}
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: VerySecurePasswordDonteLeBayo
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2026-06-24T14:53:45Z"
+    generation: 2
+    labels:
+      pod-template-hash: 79764467d6
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-79764467d6
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "1319549"
+    uid: 94bdb6c2-0a28-4d82-9799-b889f22d6209
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 79764467d6
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 79764467d6
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: VerySecurePasswordDonteLeBayo
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2026-06-30T21:07:59Z"
+    generation: 3
+    labels:
+      pod-template-hash: 845f46cbd7
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-845f46cbd7
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "5235370"
+    uid: bb22d234-9c53-43e4-aa06-f4484f5a09b9
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 845f46cbd7
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 845f46cbd7
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          envFrom:
+          - secretRef:
+              name: capstone-postgres-pass
+              optional: false
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "3"
+              memory: 16Gi
+            requests:
+              cpu: "1"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2026-06-30T21:00:57Z"
+    generation: 2
+    labels:
+      pod-template-hash: 856b76bfbc
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-856b76bfbc
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "5234150"
+    uid: aacf3364-accc-44f5-a152-3c2fd0b51000
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 856b76bfbc
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 856b76bfbc
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          envFrom:
+          - secretRef:
+              name: capstone-postgres-pass
+              optional: false
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "3"
+              memory: 16Gi
+            requests:
+              cpu: "3"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2026-06-26T03:09:19Z"
+    generation: 2
+    labels:
+      pod-template-hash: 9696579b9
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    name: capstone-db-9696579b9
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-db
+      uid: eaa38db4-cd50-4c90-88b9-cea12cff29de
+    resourceVersion: "5234961"
+    uid: e7c80f2d-3b83-4800-bd4d-269ee4d84041
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 9696579b9
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 9696579b9
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-db
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: worldcup2026
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: VerySecurePasswordDonteLeBayo
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - postgres
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "3"
+              memory: 16Gi
+            requests:
+              cpu: "3"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: vol-63nvv
+          - mountPath: /docker-entrypoint-initdb.d
+            name: vol-xehqv
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: vol-63nvv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: podtgres-init-script
+            optional: false
+          name: vol-xehqv
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "21"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T12:26:40Z"
+    generation: 6
+    labels:
+      pod-template-hash: 56666d466f
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-56666d466f
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "4920863"
+    uid: 7c1a624f-e9a0-4d42-af2c-20a0a3f049e0
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 56666d466f
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 56666d466f
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - prefix: DB_PASSWORD
+            secretRef:
+              name: capstode-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          ports:
+          - containerPort: 3000
+            name: capstone-lb
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "29"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T18:20:46Z"
+    generation: 14
+    labels:
+      pod-template-hash: 56bcd66f47
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-56bcd66f47
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "5174135"
+    uid: 0f865ecd-36e0-4e51-8ece-b44600e840bf
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 56bcd66f47
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 56bcd66f47
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health/db
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 14
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "20"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T10:28:52Z"
+    generation: 6
+    labels:
+      pod-template-hash: 587d8fcfcf
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-587d8fcfcf
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "4915380"
+    uid: 4ab3798c-c2c9-438a-9eaa-1d849c6e46e3
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 587d8fcfcf
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 587d8fcfcf
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - prefix: DB_PASSWORD
+            secretRef:
+              name: capstode-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: IfNotPresent
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          ports:
+          - containerPort: 3000
+            name: capstone-lb
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "23"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false},{"nodeName":":k3s-04","addresses":["2a01:e0a:f77:6fa0:be24:11ff:fecf:95b1"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-5b48fb4c97-gfqvb","allNodes":false},{"nodeName":":k3s-02","addresses":["192.168.1.152"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-5b48fb4c97-h5hkx","allNodes":false},{"nodeName":":k3s-03","addresses":["2a01:e0a:f77:6fa0:be24:11ff:fe93:5d78"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-5b48fb4c97-cm6ck","allNodes":false}]'
+    creationTimestamp: "2026-06-30T12:41:52Z"
+    generation: 6
+    labels:
+      pod-template-hash: 5b48fb4c97
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-5b48fb4c97
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "4925019"
+    uid: aa396b4d-3f91-46c4-b3f9-654e9a228c34
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 5b48fb4c97
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 5b48fb4c97
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - prefix: DB_PASSWORD
+            secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          ports:
+          - containerPort: 3000
+            hostPort: 80
+            name: capstone-lb
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "27"
+      deployment.kubernetes.io/revision-history: "25"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T12:45:47Z"
+    generation: 12
+    labels:
+      pod-template-hash: 649bd55777
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-649bd55777
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "5135730"
+    uid: 71eb922d-5026-4cbc-b420-424d582fba1b
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 649bd55777
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 649bd55777
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 12
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "26"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T16:43:15Z"
+    generation: 6
+    labels:
+      app: capstone-metrics-target
+      pod-template-hash: 6686cb9689
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-6686cb9689
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "5080885"
+    uid: c1d0e5b2-67b4-4acc-9814-2fed17c24ee1
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 6686cb9689
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          app: capstone-metrics-target
+          pod-template-hash: 6686cb9689
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "24"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false},{"nodeName":":k3s-01","addresses":["192.168.1.151"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-74d96bf555-q4t5g","allNodes":false},{"nodeName":":k3s-02","addresses":["192.168.1.152"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-74d96bf555-jdjjt","allNodes":false},{"nodeName":":k3s-00","addresses":["192.168.1.150"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-74d96bf555-4dxpg","allNodes":false}]'
+    creationTimestamp: "2026-06-30T12:42:29Z"
+    generation: 6
+    labels:
+      pod-template-hash: 74d96bf555
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-74d96bf555
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "4926695"
+    uid: ba8df1de-8442-4e88-922b-13ac68f60549
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 74d96bf555
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 74d96bf555
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          ports:
+          - containerPort: 3000
+            hostPort: 80
+            name: capstone-lb
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "19"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T10:16:57Z"
+    generation: 6
+    labels:
+      pod-template-hash: 76f94ccd7
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-76f94ccd7
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "4848453"
+    uid: c7059ef1-129d-4869-9d53-52072d287dee
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 76f94ccd7
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-26T01:10:03Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 76f94ccd7
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - prefix: DB_PASSWORD
+            secretRef:
+              name: capstode-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: IfNotPresent
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          ports:
+          - containerPort: 3000
+            name: capstone-lb
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "30"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T19:23:27Z"
+    generation: 12
+    labels:
+      pod-template-hash: 774596f7f5
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-774596f7f5
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "5235402"
+    uid: e0bb3dd9-5636-4a0b-8f5e-1881f3bcc95d
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        pod-template-hash: 774596f7f5
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 774596f7f5
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: capstone-container
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health/db
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    fullyLabeledReplicas: 3
+    observedGeneration: 12
+    replicas: 3
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "28"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false}]'
+    creationTimestamp: "2026-06-30T18:19:12Z"
+    generation: 6
+    labels:
+      pod-template-hash: 85cc88f88d
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-85cc88f88d
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "5136800"
+    uid: e715f399-08a3-4523-abd8-45bcb0ea7e85
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: 85cc88f88d
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 85cc88f88d
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - secretRef:
+              name: capstone-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "22"
+      field.cattle.io/publicEndpoints: '[{"addresses":["192.168.3.103"],"port":443,"protocol":"HTTPS","serviceName":"capstone:capstone-deployment-loadbalancer","ingressName":"capstone:capstone-ingress","hostname":"capstone.losvernos.com","path":"/","allNodes":false},{"nodeName":":k3s-02","addresses":["192.168.1.152"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-969977755-gfz66","allNodes":false},{"nodeName":":k3s-00","addresses":["192.168.1.150"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-969977755-xqs66","allNodes":false},{"nodeName":":k3s-01","addresses":["192.168.1.151"],"port":80,"protocol":"TCP","podName":"capstone:capstone-deployment-969977755-5hjkj","allNodes":false}]'
+    creationTimestamp: "2026-06-30T12:36:12Z"
+    generation: 6
+    labels:
+      pod-template-hash: "969977755"
+      workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    name: capstone-deployment-969977755
+    namespace: capstone
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: capstone-deployment
+      uid: 9fbd092f-81e5-4101-9021-3c8cebc01e09
+    resourceVersion: "4924516"
+    uid: e6f7c659-347c-4b2e-8d78-6fa0f9417000
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        pod-template-hash: "969977755"
+        workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+    template:
+      metadata:
+        annotations:
+          cattle.io/timestamp: "2026-06-30T10:28:52Z"
+          kubectl.kubernetes.io/restartedAt: "2026-06-25T22:14:31+02:00"
+        creationTimestamp: null
+        labels:
+          pod-template-hash: "969977755"
+          workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+        namespace: capstone
+      spec:
+        containers:
+        - env:
+          - name: DB_NAME
+            value: worldcup2026
+          - name: DB_USER
+            value: postgres
+          - name: DB_HOST
+            value: 10.43.39.155
+          - name: DB_PORT
+            value: "5432"
+          envFrom:
+          - prefix: DB_PASSWORD
+            secretRef:
+              name: capstode-db-pass
+              optional: false
+          image: sillygoat/capstone-dplc-student:latest
+          imagePullPolicy: Always
+          lifecycle: {}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: capstone-container
+          ports:
+          - containerPort: 3000
+            hostPort: 80
+            name: capstone-lb
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              workload.user.cattle.io/workloadselector: apps.deployment-capstone-capstone-deployment
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: autoscaling/v2
+  kind: HorizontalPodAutoscaler
+  metadata:
+    creationTimestamp: "2026-06-25T20:46:41Z"
+    name: capstone-autoscaler
+    namespace: capstone
+    resourceVersion: "5235417"
+    uid: e88c3ffe-2072-4998-81ea-7bd3e48e015e
+  spec:
+    behavior:
+      scaleDown:
+        policies:
+        - periodSeconds: 15
+          type: Percent
+          value: 100
+        selectPolicy: Max
+        stabilizationWindowSeconds: 300
+      scaleUp:
+        policies:
+        - periodSeconds: 15
+          type: Pods
+          value: 4
+        - periodSeconds: 15
+          type: Percent
+          value: 100
+        selectPolicy: Max
+        stabilizationWindowSeconds: 0
+    maxReplicas: 15
+    metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 60
+          type: Utilization
+      type: Resource
+    minReplicas: 3
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: capstone-deployment
+  status:
+    conditions:
+    - lastTransitionTime: "2026-06-25T20:46:56Z"
+      message: recommended size matches current size
+      reason: ReadyForNewScale
+      status: "True"
+      type: AbleToScale
+    - lastTransitionTime: "2026-06-30T21:09:21Z"
+      message: the HPA was able to successfully calculate a replica count from cpu
+        resource utilization (percentage of request)
+      reason: ValidMetricFound
+      status: "True"
+      type: ScalingActive
+    - lastTransitionTime: "2026-06-30T19:47:28Z"
+      message: the desired replica count is less than the minimum replica count
+      reason: TooFewReplicas
+      status: "True"
+      type: ScalingLimited
+    currentMetrics:
+    - resource:
+        current:
+          averageUtilization: 0
+          averageValue: 5m
+        name: cpu
+      type: Resource
+    currentReplicas: 3
+    desiredReplicas: 3
+    lastScaleTime: "2026-06-30T19:47:28Z"
+kind: List
+metadata:
+  resourceVersion: ""

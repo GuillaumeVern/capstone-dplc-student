@@ -1,0 +1,87 @@
+
+
+kubernetesClusterDomain: "cluster.local"
+
+capstoneDeployment:
+  replicas: 3
+  revisionHistoryLimit: 10
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
+  nodeSelector: {}
+  podSecurityContext: {}
+  tolerations: []
+  topologySpreadConstraints: []
+  capstoneContainer:
+    image:
+      repository: "sillygoat/capstone-dplc-student"
+      tag: "latest"
+    imagePullPolicy: "IfNotPresent"
+    env:
+      dbName: "my_database"
+      dbUser: "admin"
+      dbHost: "capstone-db"
+      dbPort: "5432"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+
+capstoneDbService:
+  nodeSelector: {}
+  podSecurityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  postgres:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      readOnlyRootFilesystem: false
+      runAsNonRoot: false
+    env:
+      postgresDb: worldcup2026
+      postgresUser: postgres
+    image:
+      repository: postgres
+      tag: 16-alpine
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: "3"
+        memory: 16Gi
+      requests:
+        cpu: "1"
+        memory: 8Gi
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  tolerations: []
+  topologySpreadConstraints: []
+kubernetesClusterDomain: cluster.local
+
+capstoneDeploymentLoadbalancer:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP
+
+capstoneDb:
+  type: "ClusterIP"
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
